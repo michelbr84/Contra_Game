@@ -12,22 +12,24 @@ from button import Button
 def run_game():
 	bg = pygame.image.load("images/map01.jpeg")
 	game_settings = Settings()
-	pos_x = 0#地图移动
+	pos_x = 0#Movimento do mapa
 	
 	pygame.init()
 	screen = pygame.display.set_mode(
 		(game_settings.screen_width,game_settings.screen_height))
-	pygame.display.set_caption("XiaoBai Game")
+	pygame.display.set_caption("Jogo Contra")
 	stats = GameStats(game_settings)
 	player = Game_Player(game_settings,screen)
 	bullets = Group()
 	boss = Group()
 	enemys = Group()
-	win_button = Button(game_settings,screen,"YOU WIN")
+	win_button = Button(game_settings,screen,"VOCÊ VENCEU")
 	gf.create_legion(game_settings,screen,enemys)
 	gf.create_boss(game_settings,screen,player,boss)
+	clock = pygame.time.Clock()
 
 	while True:
+		clock.tick(game_settings.fps)
 		pygame.mouse.set_visible(False)
 		gf.check_events(game_settings,screen,player,bullets)
 		gf.update_player(game_settings,stats,player,enemys)
@@ -38,7 +40,7 @@ def run_game():
 		
 		if player.moving_right and player.center > player.screen_rect.centerx and game_settings.boss_appear == False:
 			game_settings.screen_rolling = True
-			pos_x -= 5#屏幕滚动速度
+			pos_x -= 5#Velocidade de rolagem da tela
 		else:
 			game_settings.screen_rolling = False
 run_game()

@@ -5,10 +5,10 @@ from enemy import Enemy
 from game_boss import Game_Boss
 
 def check_keydown_events(event,game_settings,screen,player,bullets):
-	if event.key == pygame.K_k:#跳跃
+	if event.key == pygame.K_k:#Pular
 		player.player_jump = True
 
-	if event.key == pygame.K_d:#向右
+	if event.key == pygame.K_d:#Direita
 		game_settings.bullet_direction = 'right' 
 		if player.player_down or player.player_up:
 			player.moving_right = False
@@ -16,7 +16,7 @@ def check_keydown_events(event,game_settings,screen,player,bullets):
 			player.moving_right = True
 		player.player_direction = 1	
 
-	if event.key == pygame.K_a:#向左
+	if event.key == pygame.K_a:#Esquerda
 		game_settings.bullet_direction = 'left'
 		if player.player_down or player.player_up:
 			player.moving_left = False
@@ -24,19 +24,19 @@ def check_keydown_events(event,game_settings,screen,player,bullets):
 			player.moving_left = True
 		player.player_direction = -1
 
-	elif event.key == pygame.K_s:#向下
+	elif event.key == pygame.K_s:#Baixo
 		player.player_down = True
 		player.player_moving = False
 		player.moving_left = False
 		player.moving_right = False
 
-	elif event.key == pygame.K_w:#向上
+	elif event.key == pygame.K_w:#Cima
 		player.player_up = True
 		player.player_moving = False
 		player.moving_left = False
 		player.moving_right = False
 
-	elif event.key == pygame.K_j:#射击
+	elif event.key == pygame.K_j:#Atirar
 		new_bullet = Bullet(game_settings,screen,player)
 		bullets.add(new_bullet)
 		player.player_shooting = True
@@ -45,21 +45,21 @@ def check_keydown_events(event,game_settings,screen,player,bullets):
 		sys.exit()
 
 def check_keyup_events(event,player):
-	if event.key == pygame.K_d:#右
+	if event.key == pygame.K_d:#Direita
 		player.image = pygame.image.load('images/PR/player.png')
 		player.moving_right = False
 		player.player_moving = False
-	elif event.key == pygame.K_a:#左
+	elif event.key == pygame.K_a:#Esquerda
 		player.image = pygame.image.load('images/PL/player.png')
 		player.player_moving = False
 		player.moving_left = False
-	elif event.key == pygame.K_s:#下
+	elif event.key == pygame.K_s:#Baixo
 		player.player_down = False
 		if player.player_direction == 1:
 			player.image = pygame.image.load('images/PR/player.png')
 		if player.player_direction == -1:
 			player.image = pygame.image.load('images/PL/player.png')
-	elif event.key == pygame.K_w:#上
+	elif event.key == pygame.K_w:#Cima
 		player.player_up = False
 		if player.player_direction == 1:
 			player.image = pygame.image.load('images/PR/player.png')
@@ -80,7 +80,7 @@ def update_screen(game_settings,bg,pos_x,screen,player,bullets,enemys,boss,win_b
 	screen.blit(bg,(pos_x,0))
 	for bullet in bullets.sprites():
 		bullet.blit_bullet()
-	"""if game_settings.boom_end:#击中敌人爆炸
+	"""if game_settings.boom_end:#Explosão ao atingir o inimigo
 		enemys.empty()
 		game_settings.boom_end = False"""
 	player.blitme()
@@ -129,7 +129,7 @@ def create_legion(game_settings,screen,enemys):
 		enemys.add(enemy)
 
 def update_enemys(game_settings,enemys):
-	if game_settings.boss_appear == False:#判断boss是否出现，出现则不出现小兵
+	if game_settings.boss_appear == False:#Verifica se o boss apareceu, se sim, não aparecem minions
 		enemys.update()
 
 		for enemy in enemys.copy():

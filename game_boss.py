@@ -64,7 +64,7 @@ class Game_Boss(Sprite):
 			self.game_settings.game_win = True
 
 	def rand_att(self):
-		random.seed(datetime.datetime.now())
+		random.seed()
 		if self.game_settings.attack_1 == False and self.game_settings.attack_2 == False and self.game_settings.boss_jump == False and self.game_settings.boss_run == False:
 			self.rand_num = random.randint(1,70)
 			if self.rand_num == 1:

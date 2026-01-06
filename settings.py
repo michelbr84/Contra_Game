@@ -3,9 +3,9 @@ class Settings():
 		self.screen_width = 1200
 		self.screen_height = 750
 		self.player_speed = 5
-		self.jump_vel = -14.0#跳跃开始的速度,这里改动，game_player那里也要改动
+		self.jump_vel = -14.0#Velocidade inicial do pulo, se alterar aqui, deve alterar em game_player também
 		self.bullet_speed_factor = 17
-		self.enemy_speed_factor = 4#屏幕滚动速度减去敌人移动速度为1（屏幕为5，敌人为4）移动时候才平滑。这里改动，enemy的update那里也要改
+		self.enemy_speed_factor = 4#A velocidade de rolagem da tela menos a velocidade do inimigo deve ser 1 (tela é 5, inimigo é 4) para ser suave. Se alterar aqui, deve alterar no update do enemy também
 		self.screen_rolling = False
 		self.enemy_is_alive = True
 		self.boom_end = False
@@ -18,8 +18,9 @@ class Settings():
 		self.boss_jump = False
 		self.boss_run = False
 		self.boss_appear = False
-		self.boss_direction = 1#1位向左，-1为向右
+		self.boss_direction = 1#1 é para esquerda, -1 é para direita
 		self.boss_lift = 15
 		self.boss_alive = True
 		self.game_win = False
 		self.boss_boom_end = False
+		self.fps = 60
