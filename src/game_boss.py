@@ -11,7 +11,7 @@ class Game_Boss(Sprite):
 		self.pos_k = 0.0
 		self.game_settings = game_settings
 		self.screen = screen
-		self.image = pygame.image.load('images/boss/left/move/bz1.png')
+		self.image = pygame.image.load(self.game_settings.get_image_path('boss/left/move/bz1.png'))
 		self.rect = self.image.get_rect()
 		self.rect.x = self.game_settings.screen_width-self.rect.width
 		self.rect.bottom = 370
@@ -82,7 +82,7 @@ class Game_Boss(Sprite):
 		self.names1 = locals()
 		self.players1 = []
 		for self.j in range(0,34):
-			self.names1['player_image%s' %self.j] = pygame.image.load('images/boss/'+direction+'/attack_1/%s.png' %self.j)
+			self.names1['player_image%s' %self.j] = pygame.image.load(self.game_settings.get_image_path('boss/'+direction+'/attack_1/%s.png' %self.j))
 			self.players1.append(self.names1['player_image%s' %self.j])
 		self.image = self.players1[int(self.pos_i)]
 		self.pos_i += 0.5
@@ -95,7 +95,7 @@ class Game_Boss(Sprite):
 		self.names1 = locals()
 		self.players1 = []
 		for self.j in range(0,30):
-			self.names1['player_image%s' %self.j] = pygame.image.load('images/boss/'+direction+'/attack_2/%s.png' %self.j)
+			self.names1['player_image%s' %self.j] = pygame.image.load(self.game_settings.get_image_path('boss/'+direction+'/attack_2/%s.png' %self.j))
 			self.players1.append(self.names1['player_image%s' %self.j])
 		self.image = self.players1[int(self.pos_i)]
 		self.pos_i += 0.5
@@ -108,7 +108,7 @@ class Game_Boss(Sprite):
 		self.names1 = locals()
 		self.players1 = []
 		for self.j in range(1,7):
-			self.names1['player_image%s' %self.j] = pygame.image.load('images/boss/'+direction+'/move/bz%s.png' %self.j)
+			self.names1['player_image%s' %self.j] = pygame.image.load(self.game_settings.get_image_path('boss/'+direction+'/move/bz%s.png' %self.j))
 			self.players1.append(self.names1['player_image%s' %self.j])
 		self.image = self.players1[int(self.pos_i)]
 		self.pos_i += 0.1#图片变化速率
@@ -120,7 +120,7 @@ class Game_Boss(Sprite):
 		self.names1 = locals()
 		self.players1 = []
 		for self.j in range(0,6):
-			self.names1['player_image%s' %self.j] = pygame.image.load('images/boss/'+direction+'/run/%s.png' %self.j)
+			self.names1['player_image%s' %self.j] = pygame.image.load(self.game_settings.get_image_path('boss/'+direction+'/run/%s.png' %self.j))
 			self.players1.append(self.names1['player_image%s' %self.j])
 		self.image = self.players1[int(self.pos_i)]
 		self.pos_i += 0.3
@@ -157,7 +157,7 @@ class Game_Boss(Sprite):
 		self.names1 = locals()
 		self.players1 = []
 		for self.j in range(3,10):
-			self.names1['player_image%s' %self.j] = pygame.image.load('images/boss/left/jump/%s.png' %self.j)
+			self.names1['player_image%s' %self.j] = pygame.image.load(self.game_settings.get_image_path('boss/left/jump/%s.png' %self.j))
 			self.players1.append(self.names1['player_image%s' %self.j])
 		self.image = self.players1[int(self.pos_j)]
 		self.pos_j += 0.4#跳跃旋转速率
@@ -175,7 +175,7 @@ class Game_Boss(Sprite):
 		self.names1 = locals()
 		self.players1 = []
 		for self.j in range(1,4):
-			self.names1['player_image%s' %self.j] = pygame.image.load('images/boss/boom%s.png' %self.j)
+			self.names1['player_image%s' %self.j] = pygame.image.load(self.game_settings.get_image_path('boss/boom%s.png' %self.j))
 			self.players1.append(self.names1['player_image%s' %self.j])
 		self.image = self.players1[int(self.pos_k)]
 		self.pos_k += 0.05

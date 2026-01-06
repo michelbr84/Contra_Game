@@ -5,7 +5,7 @@ class Game_Player():
 
 		self.screen = screen
 		self.game_settings = game_settings
-		self.image = pygame.image.load('images/PR/player.png')
+		self.image = pygame.image.load(self.game_settings.get_image_path('PR/player.png'))
 		self.rect = self.image.get_rect()
 		self.screen_rect = self.screen.get_rect()
 		self.screen_center_pos = self.screen_rect.centerx
@@ -48,7 +48,7 @@ class Game_Player():
 		self.names = locals()
 		self.players = []
 		for self.i in range(1,3):
-			self.names['player_image%s' %self.i] = pygame.image.load('images/PR/death%s.png' %self.i)
+			self.names['player_image%s' %self.i] = pygame.image.load(self.game_settings.get_image_path('PR/death%s.png' %self.i))
 			self.players.append(self.names['player_image%s' %self.i])
 		self.image = self.players[int(self.pos_d)]
 		self.pos_d += 0.1
@@ -62,7 +62,7 @@ class Game_Player():
 			self.names = locals()
 			self.players = []
 			for self.i in range(1,4):
-				self.names['player_image%s' %self.i] = pygame.image.load('images/'+direction+'/shooting%s.png' %self.i)
+				self.names['player_image%s' %self.i] = pygame.image.load(self.game_settings.get_image_path(direction+'/shooting%s.png' %self.i))
 				self.players.append(self.names['player_image%s' %self.i])
 			self.image = self.players[int(self.pos_n)]
 			self.pos_n += 0.1#射击时跑步速率
@@ -72,7 +72,7 @@ class Game_Player():
 			self.names = locals()
 			self.players = []
 			for self.i in range(1,6):
-				self.names['player_image%s' %self.i] = pygame.image.load('images/'+direction+'/player%s.png' %self.i)
+				self.names['player_image%s' %self.i] = pygame.image.load(self.game_settings.get_image_path(direction+'/player%s.png' %self.i))
 				self.players.append(self.names['player_image%s' %self.i])
 			self.image = self.players[int(self.pos_i)]
 			self.pos_i += 0.1#跑步速率
@@ -85,7 +85,7 @@ class Game_Player():
 				self.names1 = locals()
 				self.players1 = []
 				for self.j in range(1,5):
-					self.names1['player_image%s' %self.j] = pygame.image.load('images/'+direction+'/jump%s.png' %self.j)
+					self.names1['player_image%s' %self.j] = pygame.image.load(self.game_settings.get_image_path(direction+'/jump%s.png' %self.j))
 					self.players1.append(self.names1['player_image%s' %self.j])
 				self.image = self.players1[int(self.pos_j)]
 				self.pos_j += 0.3#跳跃旋转速率
@@ -104,9 +104,9 @@ class Game_Player():
 
 	def get_player_state(self,player_state):#检测player的状态是否为趴下，向上，跳跃等
 		if self.player_direction == 1:
-			self.image = pygame.image.load('images/PR/'+player_state+'.png')
+			self.image = pygame.image.load(self.game_settings.get_image_path('PR/'+player_state+'.png'))
 		if self.player_direction == -1:
-			self.image = pygame.image.load('images/PL/'+player_state+'.png')
+			self.image = pygame.image.load(self.game_settings.get_image_path('PL/'+player_state+'.png'))
 		self.rect = self.image.get_rect()
 		self.rect.centerx = self.center
 
@@ -133,10 +133,10 @@ class Game_Player():
 			self.player_Y = self.player_start_Y
 			self.game_settings.jump_vel = -14.0#恢复跳跃开始的速度
 			if self.player_direction == 1:
-				self.image = pygame.image.load('images/PR/player.png')
+				self.image = pygame.image.load(self.game_settings.get_image_path('PR/player.png'))
 				self.reset_player()
 			if self.player_direction == -1:
-				self.image = pygame.image.load('images/PL/player.png')
+				self.image = pygame.image.load(self.game_settings.get_image_path('PL/player.png'))
 				self.reset_player()
 		if self.player_jump == True:#判断是否处于跳跃状态来决定是否旋转跳跃的图像
 			if self.player_direction == 1:

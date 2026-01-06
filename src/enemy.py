@@ -9,7 +9,7 @@ class Enemy(Sprite):
 
 		self.game_settings = game_settings
 		self.screen = screen
-		self.image = pygame.image.load('images/enemy/EL/bag1.png')
+		self.image = pygame.image.load(self.game_settings.get_image_path('enemy/EL/bag1.png'))
 		#self.image = pygame.image.load('images/enemy/EL/bz1.png')
 		self.rect = self.image.get_rect()
 		self.rect.x = self.game_settings.screen_width+self.rect.width*2
@@ -38,7 +38,7 @@ class Enemy(Sprite):
 		self.names1 = locals()
 		self.players1 = []
 		for self.j in range(1,3):
-			self.names1['player_image%s' %self.j] = pygame.image.load('images/enemy/boom%s.png' %self.j)
+			self.names1['player_image%s' %self.j] = pygame.image.load(self.game_settings.get_image_path('enemy/boom%s.png' %self.j))
 			self.players1.append(self.names1['player_image%s' %self.j])
 		self.image = self.players1[int(self.pos_i)]
 		self.pos_i += 0.1
@@ -49,7 +49,7 @@ class Enemy(Sprite):
 		self.names1 = locals()
 		self.players1 = []
 		for self.j in range(1,5):
-			self.names1['player_image%s' %self.j] = pygame.image.load('images/enemy/'+direction+'/bag%s.png' %self.j)
+			self.names1['player_image%s' %self.j] = pygame.image.load(self.game_settings.get_image_path('enemy/'+direction+'/bag%s.png' %self.j))
 			self.players1.append(self.names1['player_image%s' %self.j])
 		self.image = self.players1[int(self.pos_j)]
 		self.pos_j += 0.1#图片变化速率

@@ -8,7 +8,7 @@ class Bullet(Sprite):
 		self.game_settings = game_settings
 		self.player = player
 		self.screen = screen
-		self.image = pygame.image.load('images/bullet1.png')
+		self.image = pygame.image.load(self.game_settings.get_image_path('bullet1.png'))
 		self.rect = self.image.get_rect()
 		self.rect.left = player.rect.right-20#开始子弹默认往右射击
 		if self.player.player_direction == -1:

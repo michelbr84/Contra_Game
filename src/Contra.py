@@ -10,11 +10,19 @@ from game_boss import Game_Boss
 from button import Button
 
 def run_game():
-	bg = pygame.image.load("images/map01.jpeg")
+	pygame.init()
+	pygame.mixer.init()
 	game_settings = Settings()
+	bg = pygame.image.load(game_settings.get_image_path("map01.jpeg"))
 	pos_x = 0#Movimento do mapa
 	
-	pygame.init()
+	try:
+		pygame.mixer.music.load(game_settings.get_music_path("bgm_stage1.mp3"))
+		pygame.mixer.music.set_volume(0.5)
+		pygame.mixer.music.play(-1)
+	except Exception as e:
+		print(f"Error loading music: {e}")
+
 	screen = pygame.display.set_mode(
 		(game_settings.screen_width,game_settings.screen_height))
 	pygame.display.set_caption("Jogo Contra")

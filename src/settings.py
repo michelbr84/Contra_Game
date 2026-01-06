@@ -24,3 +24,22 @@ class Settings():
 		self.game_win = False
 		self.boss_boom_end = False
 		self.fps = 60
+		
+		import os
+		self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+		self.assets_dir = os.path.join(self.base_dir, 'assets')
+		self.images_dir = os.path.join(self.assets_dir, 'images')
+		self.music_dir = os.path.join(self.assets_dir, 'music')
+		self.sfx_dir = os.path.join(self.assets_dir, 'sfx')
+
+	def get_image_path(self, filename):
+		import os
+		return os.path.join(self.images_dir, filename)
+
+	def get_music_path(self, filename):
+		import os
+		return os.path.join(self.music_dir, filename)
+
+	def get_sfx_path(self, filename):
+		import os
+		return os.path.join(self.sfx_dir, filename)
