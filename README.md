@@ -3,7 +3,10 @@
 
 Jogo Contra feito em Python
 Um pequeno jogo Contra feito após aprender o básico de Python
-Execute o arquivo principal Contra.py para jogar  
+Execute o arquivo principal em `src/Contra.py` para jogar:
+```bash
+python src/Contra.py
+```
 Este programa não está completo
 
 ## Funcionalidades Atuais
