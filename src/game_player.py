@@ -26,6 +26,7 @@ class Game_Player():
 		self.player_start_Y = 380#开始人物的高度
 		self.player_Y = self.player_start_Y
 		self.player_shooting = False
+		self.bullet_type = 'N' # N = Normal, S = Spread
 
 	def update(self):
 		if self.game_settings.player_is_alive:

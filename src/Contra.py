@@ -31,24 +31,52 @@ def run_game():
 	bullets = Group()
 	boss = Group()
 	enemys = Group()
+	powerups = Group()
 	win_button = Button(game_settings,screen,"VOCÊ VENCEU")
 	gf.create_legion(game_settings,screen,enemys)
 	gf.create_boss(game_settings,screen,player,boss)
+	from game_menu import GameMenu
+	from scoreboard import Scoreboard
+	menu = GameMenu(game_settings, screen)
+	sb = Scoreboard(game_settings, screen, stats)
+	game_active = False
+
 	clock = pygame.time.Clock()
 
 	while True:
 		clock.tick(game_settings.fps)
-		pygame.mouse.set_visible(False)
-		gf.check_events(game_settings,screen,player,bullets)
-		gf.update_player(game_settings,stats,player,enemys)
-		gf.update_bullet(game_settings,bullets,screen,enemys,boss)	
-		gf.update_enemys(game_settings,enemys)	
-		gf.update_boss(game_settings,boss)
-		gf.update_screen(game_settings,bg,pos_x,screen,player,bullets,enemys,boss,win_button)
 		
-		if player.moving_right and player.center > player.screen_rect.centerx and game_settings.boss_appear == False:
-			game_settings.screen_rolling = True
-			pos_x -= 5#Velocidade de rolagem da tela
+		if not game_active:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					sys.exit()
+				selection = menu.check_events(event)
+				if selection == 'play':
+					game_active = True
+					stats.reset_stats() # Reset stats on new game
+					sb.prep_score()
+					pygame.mixer.music.stop()
+					pygame.mixer.music.play(-1)
+				elif selection == 'exit':
+					sys.exit()
+			
+			screen.fill((0, 0, 0))
+			menu.draw_menu()
+			pygame.display.flip()
+			
 		else:
-			game_settings.screen_rolling = False
+			pygame.mouse.set_visible(False)
+			gf.check_events(game_settings,screen,player,bullets)
+			gf.update_player(game_settings,stats,player,enemys,powerups)
+			gf.update_bullet(game_settings,bullets,screen,enemys,boss, stats, sb)	
+			gf.update_enemys(game_settings,enemys)	
+			gf.update_boss(game_settings,boss)
+			gf.update_powerups(game_settings, powerups, player)
+			gf.update_screen(game_settings,bg,pos_x,screen,player,bullets,enemys,boss,win_button,powerups, sb)
+			
+			if player.moving_right and player.center > player.screen_rect.centerx and game_settings.boss_appear == False:
+				game_settings.screen_rolling = True
+				pos_x -= 5#Velocidade de rolagem da tela
+			else:
+				game_settings.screen_rolling = False
 run_game()

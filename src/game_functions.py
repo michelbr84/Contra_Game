@@ -3,6 +3,9 @@ import pygame
 from bullet import Bullet
 from enemy import Enemy 
 from game_boss import Game_Boss
+from powerups import PowerUp
+import random
+
 
 def play_sound(game_settings, sound_file):
 	try:
@@ -46,8 +49,20 @@ def check_keydown_events(event,game_settings,screen,player,bullets):
 		player.moving_right = False
 
 	elif event.key == pygame.K_j:#Atirar
-		new_bullet = Bullet(game_settings,screen,player)
-		bullets.add(new_bullet)
+
+		if player.bullet_type == 'S':
+			# Spread Gun: 3 bullets
+			# Center
+			bullets.add(Bullet(game_settings,screen,player, vy_offset=0))
+			# Up Diagonal
+			bullets.add(Bullet(game_settings,screen,player, vy_offset=-3))
+			# Down Diagonal
+			bullets.add(Bullet(game_settings,screen,player, vy_offset=3))
+		else:
+			# Normal Gun
+			new_bullet = Bullet(game_settings,screen,player)
+			bullets.add(new_bullet)
+			
 		player.player_shooting = True
 		play_sound(game_settings, 'player_shoot.mp3')
 
@@ -86,7 +101,7 @@ def check_events(game_settings,screen,player,bullets):
 		elif event.type == pygame.KEYUP:
 			check_keyup_events(event,player)
 
-def update_screen(game_settings,bg,pos_x,screen,player,bullets,enemys,boss,win_button):
+def update_screen(game_settings,bg,pos_x,screen,player,bullets,enemys,boss,win_button, powerups, sb):
 	screen.blit(bg,(pos_x,0))
 	for bullet in bullets.sprites():
 		bullet.blit_bullet()
@@ -97,22 +112,24 @@ def update_screen(game_settings,bg,pos_x,screen,player,bullets,enemys,boss,win_b
 	if game_settings.boss_appear:
 		boss.draw(screen)
 	enemys.draw(screen)
+	powerups.draw(screen)
+	sb.show_score()
 
 	if game_settings.game_win:
 		win_button.draw_button()
 		play_sound(game_settings, 'level_complete.mp3')
 	pygame.display.flip()
 
-def update_bullet(game_settings,bullets,screen,enemys,boss):
+def update_bullet(game_settings,bullets,screen,enemys,boss, stats, sb):
 	bullets.update()
 	for bullet in bullets.copy():
 		if bullet.rect.centerx<0 or bullet.rect.centery<0 or bullet.rect.centerx > game_settings.screen_width:
 			bullets.remove(bullet)
-	check_bullet_enemy_collisions(game_settings,bullets,screen,enemys)
-	check_bullet_boss_collisions(game_settings,bullets,boss)
+	check_bullet_enemy_collisions(game_settings,bullets,screen,enemys, stats, sb)
+	check_bullet_boss_collisions(game_settings,bullets,boss, stats, sb)
 	
 
-def check_bullet_enemy_collisions(game_settings,bullets,screen,enemys):
+def check_bullet_enemy_collisions(game_settings,bullets,screen,enemys, stats, sb):
 	if game_settings.enemy_is_alive:
 		collisions = pygame.sprite.groupcollide(bullets,enemys,True,False)
 	else:
@@ -120,10 +137,16 @@ def check_bullet_enemy_collisions(game_settings,bullets,screen,enemys):
 	if collisions != {}:
 		game_settings.enemy_is_alive = False
 		play_sound(game_settings, 'enemy_hit.mp3')
+		stats.score += 50
+		sb.prep_score()
+		if stats.score > stats.high_score:
+			stats.high_score = stats.score
+			sb.prep_high_score()
+			stats.save_high_score()
 	if len(enemys) == 0:
 		create_legion(game_settings,screen,enemys)
 
-def check_bullet_boss_collisions(game_settings,bullets,boss):
+def check_bullet_boss_collisions(game_settings,bullets,boss, stats, sb):
 	if game_settings.boss_alive:
 		collisions = pygame.sprite.groupcollide(boss,bullets,False,True)
 	else:
@@ -134,6 +157,12 @@ def check_bullet_boss_collisions(game_settings,bullets,boss):
 	if game_settings.boss_lift == 0:
 		game_settings.boss_alive = False
 		play_sound(game_settings, 'explosion.mp3')
+		stats.score += 500
+		sb.prep_score()
+		if stats.score > stats.high_score:
+			stats.high_score = stats.score
+			sb.prep_high_score()
+			stats.save_high_score()
 
 def create_legion(game_settings,screen,enemys):
 	for enemy_number in range(1):
@@ -154,7 +183,21 @@ def update_enemys(game_settings,enemys):
 				game_settings.boss_appear = True
 				play_sound(game_settings, 'boss_appear.mp3')
 
-def update_player(game_settings,stats,player,enemys):
+def update_powerups(game_settings, powerups, player):
+	powerups.update()
+	
+	# Random spawn
+	if len(powerups) < 1 and random.randint(1, 1000) == 1: # 0.1% chance per frame if empty
+		powerups.add(PowerUp(game_settings, player.screen))
+		
+	# Collision with player
+	hit_powerup = pygame.sprite.spritecollideany(player, powerups)
+	if hit_powerup:
+		player.bullet_type = hit_powerup.type
+		play_sound(game_settings, 'powerup_pickup.mp3')
+		powerups.remove(hit_powerup)
+
+def update_player(game_settings,stats,player,enemys, powerups):
 	player.update()
 	if pygame.sprite.spritecollideany(player,enemys):
 		player_hit(game_settings,stats,player)

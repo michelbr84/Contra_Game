@@ -3,7 +3,7 @@ from pygame.sprite import Sprite
 
 class Bullet(Sprite):
 
-	def __init__(self,game_settings,screen,player):
+	def __init__(self,game_settings,screen,player, vy_offset=0):
 		super().__init__()
 		self.game_settings = game_settings
 		self.player = player
@@ -20,20 +20,23 @@ class Bullet(Sprite):
 			self.rect.bottom = player.rect.top+20
 		self.x = float(self.rect.x)
 		self.y = float(self.rect.y)
-		self.mx = self.x#mx为保存初始x的坐标
-		self.my = self.y
+		
+		# Set velocities
 		self.speed_factor = game_settings.bullet_speed_factor
-
+		self.vx = 0
+		self.vy = vy_offset
+		
+		if self.player.player_up:
+			self.vy = -self.speed_factor
+		else:
+			self.vx = self.speed_factor * self.player.player_direction
+			
 	def update(self):
-		if self.y<self.my or self.y == self.my and self.x == self.mx and self.player.player_up:
-			self.y -= self.speed_factor
-			self.rect.y = self.y
-		elif self.x < self.mx or self.x == self.mx and self.player.player_direction == -1:
-			self.x -= self.speed_factor
-			self.rect.x = self.x
-		elif self.x>self.mx or self.x == self.mx:#默认为右方向
-			self.x += self.speed_factor
-			self.rect.x = self.x
+		self.x += self.vx
+		self.y += self.vy
+		self.rect.x = self.x
+		self.rect.y = self.y
+
 
 	def blit_bullet(self):
 	

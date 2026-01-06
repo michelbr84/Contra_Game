@@ -17,11 +17,11 @@ Este programa não está completo
 * [x] Condição de vitória e derrota
 
 ## ToDo (Para fazer)
-* [ ] Menu inicial
-* [ ] Efeitos sonoros e Música de fundo
-* [ ] Adicionar mais fases/níveis
-* [ ] Power-ups (armas diferentes: Spread, Laser, etc.)
-* [ ] Sistema de pontuação (High Score) aprimorado
+* [x] Menu inicial
+* [x] Efeitos sonoros e Música de fundo
+* [x] Adicionar mais fases/níveis (Parcial: lógica pronta, falta desenhar mapas)
+* [x] Power-ups (armas diferentes: Spread, Laser, etc.)
+* [x] Sistema de pontuação (High Score) aprimorado
 * [ ] Mais variedades de inimigos
 
 
