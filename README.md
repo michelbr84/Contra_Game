@@ -1,5 +1,5 @@
 # Jogo Contra
-![Contra Game](images/game.png)
+![Contra Game](assets/images/game.png)
 
 Jogo Contra feito em Python
 Um pequeno jogo Contra feito após aprender o básico de Python
